@@ -1,0 +1,23 @@
+{
+  "name": "git-spit",
+  "version": "1.0.0",
+  "description": "CLI to write out your current git commit hash",
+  "main": "index.js",
+  "bin": {
+    "gitspit": "./git-spit.js",
+    "git-spit": "./git-spit.js"
+  },
+  "scripts": {
+    "execute": "node git-spit.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elliotjharper/git-spit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elliotjharper/git-spit/issues"
+  },
+  "homepage": "https://github.com/elliotjharper/git-spit#readme"
+}
