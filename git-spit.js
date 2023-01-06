@@ -3,40 +3,31 @@
 const { exec } = require("child_process");
 const { writeFileSync } = require("fs");
 
-async function getBranchName() {
+async function readExecOutput(script) {
   return new Promise((resolve, reject) => {
-    exec("git branch --show-current", (err, stdout, stderr) => {
-      console.log(4);
-
+    exec(script, (err, stdout, stderr) => {
       if (!!err || !!stderr || !stdout) {
-        reject("Error getting branch");
+        reject(`Error running script: ${script}`);
         return;
       }
 
-      resolve(stdout);
+      resolve(stdout.trimEnd());
     });
   });
 }
 
+async function getBranchName() {
+  return readExecOutput("git branch --show-current");
+}
+
 async function getBranchCommit(branchName) {
-  return new Promise((resolve, reject) => {
-    exec(`git rev-parse "${branchName}"`, (err, stdout, stderr) => {
-      console.log(5);
-
-      if (!!err || !!stderr || !stdout) {
-        reject("Error getting commit hash");
-        return;
-      }
-
-      resolve(stdout);
-    });
-  });
+  return readExecOutput(`git rev-parse "${branchName}"`);
 }
 
 async function main() {
   const branchName = await getBranchName();
   const branchCommit = await getBranchCommit(branchName);
-  writeFileSync(`./commit-${branchCommit}.txt`);
+  writeFileSync(`./!gitrev__${branchName}@${branchCommit}`, "");
 }
 
 main();
