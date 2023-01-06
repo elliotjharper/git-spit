@@ -1,6 +1,6 @@
 {
   "name": "git-spit",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "description": "CLI to write out your current git commit hash",
   "main": "index.js",
   "bin": {

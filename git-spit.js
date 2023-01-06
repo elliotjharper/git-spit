@@ -24,10 +24,22 @@ async function getBranchCommit(branchName) {
   return readExecOutput(`git rev-parse "${branchName}"`);
 }
 
+function substituteSlashes(branchName) {
+  return branchName.replace("\\", "-").replace("/", "-");
+}
+
 async function main() {
   const branchName = await getBranchName();
   const branchCommit = await getBranchCommit(branchName);
-  writeFileSync(`./!gitrev__${branchName}@${branchCommit}`, "");
+
+  console.log(
+    `Writing out marker file for last commit [${branchCommit}] on branch [${branchName}]`
+  );
+
+  writeFileSync(
+    `./!gitrev__${substituteSlashes(branchName)}@${branchCommit}`,
+    ""
+  );
 }
 
 main();
